@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#fef4e6">
+  <title>My Place — Grammar Game | Team Board Game</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+     
+      <h1>My Place <em>Grammar Game</em></h1>
+      <p>Explore the house, practise grammar and collect points!</p>
+    </div>
+  
+  </header>
+
+  <main>
+    <section class="scoreboard" aria-label="Team scores">
+      <div class="team-card team-blue active" id="blueCard">
+        <span class="team-mark">B</span>
+        <div class="team-details"><span class="mini-label">BLUE TEAM</span><strong id="blueScore">0 points</strong></div>
+        <span class="team-position" id="bluePosition">START</span>
+      </div>
+      <div class="turn-badge"><span class="mini-label">NOW PLAYING</span><strong id="activeTeam">Blue Team</strong></div>
+      <div class="team-card team-red" id="redCard">
+        <span class="team-mark">R</span>
+        <div class="team-details"><span class="mini-label">RED TEAM</span><strong id="redScore">0 points</strong></div>
+        <span class="team-position" id="redPosition">START</span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="board-column">
+        <div class="section-heading">
+
+        </div>
+        <div class="board-scroll" aria-label="Game board (scroll horizontally on smaller screens)">
+          <div class="board" id="board">
+            <img class="board-image" src="images/board.png" alt="My Place board with START, numbered spaces 1 through 20 and FINISH" draggable="false">
+            <div class="piece piece-blue" id="blueToken" aria-label="Blue team piece">B</div>
+            <div class="piece piece-red" id="redToken" aria-label="Red team piece">R</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <section class="dice-panel panel">
+          <div class="dice-heading">
+            <div><span class="eyebrow">YOUR TURN</span><h2 id="turnHeading">Blue Team</h2></div>
+            <div class="dice-icons"><button class="sound-toggle" id="soundButton" type="button" aria-pressed="true" title="Turn movement sounds on or off">🔊 Sound on</button><span class="die" id="die" aria-hidden="true">🎲</span></div>
+          </div>
+          <div class="dice-option">
+            <label for="diceSides">Dice for this game</label>
+            <select id="diceSides"><option value="3" selected>1–3 (more room challenges)</option><option value="6">1–6 (classic dice)</option></select>
+          </div>
+          <button class="button button-yellow" id="rollButton">Roll the dice</button>
+          <p class="roll-note" id="rollMessage" aria-live="polite">Both teams begin at START.</p>
+        </section>
+
+        <section class="task-panel panel" id="taskPanel" aria-live="polite">
+          <div class="idle-task"><div class="idle-icon">✦</div><h3>Ready to play?</h3><p>Roll the dice to move your piece. A task will appear when it lands on a numbered space.</p></div>
+        </section>
+
+        <div class="turn-actions">
+          <button class="button button-blue" id="endTurnButton" disabled>End turn →</button>
+          <button class="button button-quiet" id="restartButton">↻ New game</button>
+        </div>
+
+      </aside>
+    </section>
+  </main>
+
+  <footer>Сайт создан ВК сообществом: Агафонова Людмила|Блог учителя английского</footer>
+
+  <!-- Rules appear before each game; no rule card clutters the playing area. -->
+  <div class="welcome-overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <section class="welcome-modal">
+    
+ 
+      <h2 id="welcomeTitle">My Place <em>Grammar Game</em></h2>
+      <p class="welcome-description">Explore the rooms, answer the questions and reach the finish!</p>
+      <div class="welcome-rules">
+        <div class="welcome-rule"><span class="welcome-number">1</span><p><b>Play in two teams.</b> Blue and Red take turns rolling the dice and moving along the numbered path.</p></div>
+        <div class="welcome-rule"><span class="welcome-number">2</span><p><b>Complete a grammar task</b> on every numbered space: choose <i>a / an / some / any</i>, correct a mistake or make a sentence.</p></div>
+        <div class="welcome-rule"><span class="welcome-number">3</span><p><b>Explore the rooms!</b> On spaces <b>1, 3, 5, 9 and 15</b>, answer three special questions aloud using <i>there is / there are</i> and prepositions of place.</p></div>
+        <div class="welcome-rule"><span class="welcome-number">4</span><p><b>Collect points:</b> 1 for each correct grammar task or 3 for a completed room challenge.</p></div>
+        <div class="welcome-rule"><span class="welcome-number">5</span><p><b>Reach FINISH to win!</b> The first team to finish wins. The team starting first changes with each new game.</p></div>
+      </div>
+      <div class="welcome-actions">
+        <div class="welcome-team" id="welcomeTeam">Blue Team goes first</div>
+        <button class="button button-yellow welcome-start" id="startGameButton" type="button">Start the game →</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="room-overlay" id="roomOverlay" aria-hidden="true">
+    <section class="room-modal" role="dialog" aria-modal="true" aria-labelledby="roomTitle">
+      <header class="room-header">
+        <div><span class="eyebrow" id="roomEyebrow">ROOM CHALLENGE</span><h2 id="roomTitle">Kitchen</h2></div>
+        <span class="room-team" id="roomTeam">BLUE TEAM</span>
+      </header>
+      <div class="room-body">
+        <div class="room-visual"><img src="" alt="Illustration of the room" id="roomImage"></div>
+        <div class="room-questions">
+          <div class="room-subtitle">LOOK AT THE PICTURE</div>
+          <h3>Answer three questions</h3>
+          <p class="room-tip">Answer aloud using <strong>there is / there are</strong> and prepositions of place. The teacher decides when the task is completed.</p>
+          <ol class="questions-list" id="roomQuestions"></ol>
+          <button class="suggestions-btn" id="showSuggestions" type="button">Show sample answers</button>
+          <div class="room-suggestions" id="roomSuggestions" hidden></div>
+          <div class="room-completion" id="roomCompletion" aria-live="polite"></div>
+          <div class="room-actions">
+            <button class="button button-yellow" id="roomCompleteButton">✓ Task completed (+3)</button>
+            <button class="button button-blue" id="roomContinueButton" hidden>Return to the board →</button>
+            <button class="button button-quiet" id="roomSkipButton">End turn without points</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="victory-overlay" id="victoryOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="victoryTitle">
+    <div class="victory-card">
+      <div class="victory-trophy" aria-hidden="true">🏆</div>
+      <p class="eyebrow">GRAMMAR QUEST COMPLETE</p>
+      <h2 id="victoryTitle">Blue Team wins!</h2>
+      <p id="victoryScore">Blue Team: 0 points · Red Team: 0 points</p>
+      <div class="victory-actions">
+        <button class="button button-yellow" id="victoryRestart">↻ Play again</button>
+        <button class="button button-quiet" id="victoryClose">See the board</button>
+      </div>
+    </div>
+  </div>
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+  <script src="js/questions.js" defer></script>
+  <script src="js/game.js" defer></script>
+</body>
+</html>
